@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE configuration
+	PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+	"http://mybatis.org/dtd/mybatis-3-config.dtd">
+	<configuration>
+		<!-- 使用LOG4J显示执行的sql语句，要正常使用还需要有LOG4J的配置文件	 -->
+		<settings>
+			<setting name="logImpl" value="LOG4J"/>
+		</settings>
+		<!-- 配置别名 -->
+		<typeAliases>
+			<package name="com.ysd.entity"/>
+		</typeAliases>
+		
+		<!-- 数据源 -->
+		
+		<!--映射文件  -->
+		<mappers>
+			<package name="com.ysd.dao"/>
+		</mappers>
+	</configuration>

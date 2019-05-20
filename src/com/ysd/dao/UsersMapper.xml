@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ysd.dao.UsersMapper">
+	<select id="selectAllUsers" parameterType="fenye" resultType="users" >
+		select Id,LoginName,Password,IsLockout,LastLoginTime,CreateTime,LockTime,PsdWrongTime,ProtectEMail,ProtectMtel
+		from users 
+		
+		<where>
+			 <if test="LoginName !=null and LoginName !=''">
+				and LoginName like "%"#{LoginName}"%"
+			</if>
+			 <if test="StartcreateTime !=null and StartcreateTime !=''">
+				and CreateTime &gt;= #{StartcreateTime}
+			</if>
+			 <if test="EndcreateTime !=null and EndcreateTime !=''">
+				and CreateTime &lt;= #{EndcreateTime}
+			</if>
+			<if test="IsLockout !=null and IsLockout !=''"> 
+			and IsLockout=#{IsLockout}
+			 </if>
+		</where> 
+		 limit #{page},#{pageSize}; 
+	</select>
+	
+	<select id="selectAllUsersCount" parameterType="fenye" resultType="int" >
+		select count(Id) from users 
+		
+		<where>
+			 <if test="LoginName !=null and LoginName !=''">
+				and LoginName like "%"#{LoginName}"%"
+			</if>
+			 <if test="StartcreateTime !=null and StartcreateTime !=''">
+				and CreateTime &gt;= #{StartcreateTime}
+			</if>
+			 <if test="EndcreateTime !=null and EndcreateTime !=''">
+				and CreateTime &lt;= #{EndcreateTime}
+			</if>
+			<if test="IsLockout !=null and IsLockout !=''"> 
+			and IsLockout=#{IsLockout}
+			 </if>
+		</where> 
+			
+	</select>
+	
+	<delete id="delUsers">
+		delete from users where Id=#{Id}
+	</delete>
+ 	
+ 	
+ 	
+	<update id="updateUsers" parameterType="users">
+		update users 
+		<set>
+			<if test=" ProtectEMail!=null and ProtectEMail!='' ">
+				ProtectEMail=#{ProtectEMail},
+			 </if>
+			 <if test=" ProtectMtel!=null and ProtectMtel!='' ">
+				ProtectMtel=#{ProtectMtel},
+			 </if>
+			
+		</set>
+		<where>
+		 Id=#{Id}
+		</where>
+	</update>
+	
+	<insert id="addUsers" parameterType="Users">
+		insert into
+		users(LoginName,Password,IsLockout,LastLoginTime,CreateTime,LockTime,PsdWrongTime,ProtectEMail,ProtectMtel)
+		values(#{LoginName},#{Password},#{IsLockout},#{LastLoginTime},#{CreateTime},#{LockTime},#{PsdWrongTime},#{ProtectEMail},#{ProtectMtel})
+	</insert>
+<!-- 是否解锁，锁定	 -->
+	<update id="updateYonghujiesoByisLockout" parameterType="Users">
+		update users
+			<set>
+				<if test="IsLockout != null and IsLockout!='' ">
+					 IsLockout=#{IsLockout} 
+				</if>
+			</set>
+			<where>
+				<if test="Id !=null and Id !=''">
+					Id=#{Id}
+				</if>
+			</where>
+	</update>
+	
+	<!-- 重置密码 -->
+		<update id="updateResetpas" parameterType="Users">
+		update users
+			<set> 
+				Password='ysd123'  
+				  
+			</set>
+			<where>
+				<if test="Id !=null and Id !=''">
+					Id=#{Id}
+				</if>
+			</where>
+	</update> 
+	
+		
+	
+	
+</mapper>

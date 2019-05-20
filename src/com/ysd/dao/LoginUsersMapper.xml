@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ysd.dao.LoginUsersMapper">
+	<!-- 查询登录用户是否存在 -->
+	<select id="selectUsersByName" parameterType="string" resultType="users" >
+		select Id,LoginName,Password,IsLockout,LastLoginTime,CreateTime,LockTime,PsdWrongTime,ProtectEMail,ProtectMtel from users 
+		<where>
+			and LoginName = #{loginName} 
+		</where>
+	</select>
+	 
+	<select id="selectUsersRoles" parameterType="string" resultType="roles" >
+		SELECT r.rolesid,r.rolesName
+		FROM roles r,userroles ur,users u 
+		WHERE ur.userId=u.id and ur.roleId=r.rolesid and u.loginName=#{loginName};
+	</select>
+	
+	<update id="updateUsersLoginYi" parameterType="users">
+		update users 
+		<set>
+			<if test="IsLockout != null and IsLockout != '' ">
+				IsLockout=#{IsLockout},
+			</if>
+			<if test="LastLoginTime !=null and LastLoginTime !='' ">
+				LastLoginTime=#{LastLoginTime},
+			</if>
+			<if test="LockTime != null and LockTime !='' ">
+				LockTime=#{LockTime},
+			</if>
+			<if test="PsdWrongTime != null and PsdWrongTime !='' ">
+				PsdWrongTime=#{PsdWrongTime}
+			</if>
+		</set>
+		<where>
+			id=#{Id}
+		</where>
+	</update>
+	
+	<update id="updateUsersInfo" parameterType="users" >
+		update users 
+		<set>
+			<if test=" ProtectEMail!=null and  ProtectEMail !='' " >
+				ProtectEMail=#{ProtectEMail},
+			</if>
+			<if test=" ProtectMtel!=null and   ProtectMtel!='' " >
+				ProtectMtel=#{ProtectMtel}
+			</if>
+		</set>
+		<where>
+			Id=#{Id}
+		</where>
+	</update>
+	
+	<update id="updateUsersPsw" parameterType="users" >
+		update users 
+		<set>
+			Password =#{Password} 
+		</set>
+		<where>
+			Id=#{Id}
+		</where>
+	</update>
+	
+	<update id="reloadPsw" parameterType="int" >
+		update users 
+		<set>
+			Password='ysd123' 
+		</set>
+		<where>
+			id=#{id} 
+		</where>
+	</update>
+</mapper>

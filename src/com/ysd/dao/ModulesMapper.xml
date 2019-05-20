@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ysd.dao.ModulesMapper">
+	
+	<select id="selectRolesModules" parameterType="int" resultType="ModulesTree" >
+		SELECT m.id,m.text,m.path 
+		FROM modules m,rolemodules rm,roles r 
+		where r.rolesid=rm.roleId and rm.moduleId=m.id and r.rolesid=#{rolesid} 
+	</select>
+	
+	<select id="selectModulesPrent" parameterType="int" resultType="Modules" >
+		SELECT m.id,m.parentId,m.text 
+		FROM modules m,rolemodules rm,roles r 
+		where r.rolesid=rm.roleId and rm.moduleId=m.id and r.rolesid=#{rolesId} 
+	</select>
+	
+	<select id="selectModulesPrentById"  resultType="ModulesPrent" >
+		select * from modulesprent 
+	</select>
+</mapper>

@@ -1,0 +1,205 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+ "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ysd.dao.StudentMapper">
+ 	<select id="selectCount" parameterType="fenye" resultType="int">
+		select count(*) from  
+		student ,Askers 
+ 		<where>
+ 			student.askerId=Askers.askerId
+			<if test=" stuname !=null and stuname !=''">
+				and student.name like "%"#{stuname}"%"
+			</if>
+			<if test=" stuphone !=null and stuphone !=''">
+				and student.phone = #{stuphone}
+			</if>
+			<if test=" stuqq !=null and stuqq !=''">
+				and student.qq = #{stuqq}
+			</if>
+			<if test=" stucreateTime !=null and stucreateTime !=''">
+				and student.createTime = #{stucreateTime}
+			</if>
+			<if test=" stuisPay !=null and stuisPay !=''">
+				and student.isPay = #{stuisPay}
+			</if>
+			<if test=" stuisValid !=null and stuisValid !=''">
+				and student.isValid = #{stuisValid}
+			</if>
+			<if test=" stuisReturnVist !=null and stuisReturnVist !=''">
+				and student.isReturnVist = #{stuisReturnVist}
+			</if> 
+			</where>
+ 	</select>
+ 	<select id="selectStu" parameterType="fenye" resultType="student">
+ 	select 
+		id,name,sex,age,phone,status,state,msgSource,sourceUrl,sourceKeyWorld,address,askerName,qq,weixin,content,createTime,learnForward,isValid,
+		record,isReturnVist,firstVistTime,isHome,homeTime,lostValid,isPay,payTime,money,isReturnMoney,isInClass,inClassTime,inClassContent,
+		askerContent,isDel,formPart,concern,isBaoBei,ziXunName,createUser,returnMoneyReason,preMoney,preMoneyTime
+		 from student ,Askers 
+ 		<where>
+ 			student.askerId=Askers.askerId
+			<if test=" stuname !=null and stuname !=''">
+				and student.name like "%"#{stuname}"%"
+			</if>
+			<if test=" stuphone !=null and stuphone !=''">
+				and student.phone = #{stuphone}
+			</if>
+			<if test=" stuqq !=null and stuqq !=''">
+				and student.qq = #{stuqq}
+			</if>
+			<if test=" stuziXunName !=null and stuziXunName !=''">
+				and student.ziXunName like "%"#{stuziXunName}"%"
+			</if>
+			<if test=" stucreateTime !=null and stucreateTime !=''">
+				and student.createTime = #{stucreateTime}
+			</if>
+			<if test=" stuisPay !=null and stuisPay !=''">
+				and student.isPay = #{stuisPay}
+			</if>
+			<if test=" stuisValid !=null and stuisValid !=''">
+				and student.isValid = #{stuisValid}
+			</if>
+			<if test=" stuisReturnVist !=null and stuisReturnVist !=''">
+				and student.isReturnVist = #{stuisReturnVist}
+			</if> 
+		</where>
+ 		
+ 		 limit #{page},#{pageSize}; 
+ 	</select>
+ 	
+ 	<insert id="addStu" parameterType="student">
+		insert into student(name,sex,age,phone,status,state,msgSource,sourceUrl,sourceKeyWorld,address,askerId,qq,weixin,content,createTime,learnForward,isValid,record,isReturnVist,firstVistTime,isHome,homeTime,lostValid,isPay,payTime,money,isReturnMoney,isInClass,inClassTime,inClassContent,askerContent,isDel,formPart,concern,isBaoBei,ziXunName,createUser,returnMoneyReason,preMoney,preMoneyTime)
+		values(#{name},#{sex},#{age},#{phone},#{status},#{state},#{msgSource},#{sourceUrl},#{sourceKeyWorld},#{address},#{askerId},#{qq},#{weixin},#{content},#{createTime},#{learnForward},#{isValid},#{record},#{isReturnVist},#{firstVistTime},#{isHome},#{homeTime},#{lostValid},#{isPay},#{payTime},#{money},#{isReturnMoney},#{isInClass},#{inClassTime},#{inClassContent},#{askerContent},#{isDel},#{formPart},#{concern},#{isBaoBei},#{ziXunName},#{createUser},#{returnMoneyReason},#{preMoney},#{preMoneyTime})
+	</insert>
+ 	
+ 	<delete id="delStu">
+		delete from student where id=#{id}
+	</delete>
+ 	
+ 	
+ 	
+	<update id="updateStu" parameterType="student">
+		update student 
+		<set>
+			<if test=" name!=null and name!='' ">
+				name=#{name},
+			 </if>
+			<if test=" sex!=null and sex!='' ">
+				sex=#{sex},
+			 </if>
+			<if test=" age!=null and age!='' ">
+				age=#{age},
+			 </if>
+			<if test=" phone!=null and phone!='' ">
+				phone=#{phone},
+			 </if>
+			<if test=" status!=null and status!='' ">
+				status=#{status},
+			 </if>
+			<if test=" state!=null and state!='' ">
+				state=#{state},
+			 </if>
+			<if test=" msgSource!=null and msgSource!='' ">
+				msgSource=#{msgSource},
+			 </if>
+			<if test=" sourceUrl!=null and sourceUrl!='' ">
+				sourceUrl=#{sourceUrl},
+			 </if>
+			 <if test=" sourceKeyWorld!=null and sourceKeyWorld!='' ">
+				sourceKeyWorld=#{sourceKeyWorld},
+			 </if>
+			 <if test=" qq!=null and qq!='' ">
+				qq=#{qq},
+			 </if>
+			 <if test=" weixin!=null and weixin!='' ">
+				weixin=#{weixin},
+			 </if>
+			 <if test=" content!=null and content!='' ">
+				content=#{content},
+			 </if>
+			 <if test=" createTime!=null and createTime!='' ">
+				createTime=#{createTime},
+			 </if>
+			 <if test=" learnForward!=null and learnForward!='' ">
+				learnForward=#{learnForward},
+			 </if>
+			 <if test=" isValid!=null and isValid!='' ">
+				isValid=#{isValid},
+			 </if>
+			 <if test=" record!=null and record!='' ">
+				record=#{record},
+			 </if>
+			 <if test=" isReturnVist!=null and isReturnVist!='' ">
+				isReturnVist=#{isReturnVist},
+			 </if>
+			 <if test=" firstVistTime!=null and firstVistTime!='' ">
+				firstVistTime=#{firstVistTime},
+			 </if>
+			 <if test=" isHome!=null and isHome!='' ">
+				isHome=#{isHome},
+			 </if>
+			 <if test=" homeTime!=null and homeTime!='' ">
+				homeTime=#{homeTime},
+			 </if>
+			 <if test=" lostValid!=null and lostValid!='' ">
+				lostValid=#{lostValid},
+			 </if>
+			 <if test=" isPay!=null and isPay!='' ">
+				isPay=#{isPay},
+			 </if>
+			 <if test=" payTime!=null and payTime!='' ">
+				payTime=#{payTime},
+			 </if>
+			 <if test=" money!=null and money!='' ">
+				money=#{money},
+			 </if>
+			  <if test=" isReturnMoney!=null and isReturnMoney!='' ">
+				isReturnMoney=#{isReturnMoney},
+			 </if>
+			  <if test=" isInClass!=null and isInClass!='' ">
+				isInClass=#{isInClass},
+			 </if>
+			  <if test=" inClassTime!=null and inClassTime!='' ">
+				inClassTime=#{inClassTime},
+			 </if>
+			  <if test=" inClassContent!=null and inClassContent!='' ">
+				inClassContent=#{inClassContent},
+			 </if>
+			  <if test=" askerContent!=null and askerContent!='' ">
+				askerContent=#{askerContent},
+			 </if>
+			  <if test=" isDel!=null and isDel!='' ">
+				isDel=#{isDel},
+			 </if>
+			  <if test=" formPart!=null and formPart!='' ">
+				formPart=#{formPart},
+			 </if>
+			 <if test=" concern!=null and concern!='' ">
+				concern=#{concern},
+			 </if>
+			 <if test=" isBaoBei!=null and isBaoBei!='' ">
+				isBaoBei=#{isBaoBei},
+			 </if>
+			 <if test=" ziXunName!=null and ziXunName!='' ">
+				ziXunName=#{ziXunName},
+			 </if>
+			 <if test=" createUser!=null and createUser!='' ">
+				createUser=#{createUser},
+			 </if>
+			 <if test=" returnMoneyReason!=null and returnMoneyReason!='' ">
+				returnMoneyReason=#{returnMoneyReason},
+			 </if>
+			  <if test=" preMoney!=null and preMoney!='' ">
+				preMoney=#{preMoney},
+			 </if>
+			  <if test=" preMoneyTime!=null and preMoneyTime!='' ">
+				preMoneyTime=#{preMoneyTime},
+			 </if>
+		</set>
+		<where>
+		 id=#{id}
+		</where>
+	</update>
+ 	
+ 	
+ </mapper>
